@@ -1,14 +1,14 @@
 <template>
-    <div class="">
+    <div class="text-center">
         <!-- Label do input -->
-        <label :for="inputId" class="block text-sm font-medium text-gray-700">
+        <label :for="inputId" class="block text-lg  font-medium text-gray-700">
             {{ label }}
         </label>
 
         <!-- Container do input com ícone -->
         <div class="relative mt-1">
             <input :type="type"
-                class="block w-100 px-4 py-2 mt-1 text-gray-700 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-200 disabled:cursor-not-allowed"
+                class="block w-100 px-4 py-2 mt-1 text-gray-700 text-center border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-200 disabled:cursor-not-allowed"
                 :id="inputId" :class="{ 'border-red-500': invalid, 'border-gray-400': !invalid }"
                 :placeholder="placeholder" :name="name" :value="modelValue" :disabled="disabled"
                 @input="$emit('update:modelValue', $event.target.value)" @change="mask" />
@@ -26,7 +26,7 @@
 
 <script>
 export default {
-    name: 'InputComponent',
+    name: 'InputCodeComponent',
     props: {
         label: {
             type: String,

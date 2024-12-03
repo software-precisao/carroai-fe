@@ -1,5 +1,4 @@
 <template>
-
     <NavBarComponent :isCollapsed="isSidebarCollapsed" />
     <HeaderComponent @toggleSidebar="toggleSidebar" />
 
@@ -287,7 +286,7 @@ import NavBarComponent from "../../components/navbar/navbarComp.vue";
 import FooterComponent from "../../components/footer/FooterComp.vue";
 
 export default {
-    name: "MainView",
+    name: "DriverView",
     components: {
         HeaderComponent,
         FooterComponent,
@@ -303,7 +302,7 @@ export default {
             this.isSidebarCollapsed = !this.isSidebarCollapsed;
         },
     },
-};
+}
 </script>
 
 <style scoped>
