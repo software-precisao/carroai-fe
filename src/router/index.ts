@@ -4,6 +4,7 @@ import RegisterView from "@/screens/auth/registerView.vue";
 import RecoveryView from "@/screens/auth/recoveryView.vue";
 import MainView from "@/screens/admin/mainView.vue";
 import DriverView from "@/screens/admin/DriverView.vue";
+import TarifasView from "@/screens/admin/TarifasView.vue";
 
 const routes = [
   {
@@ -30,6 +31,11 @@ const routes = [
     path: "/motoristas",
     name: "Motoristas",
     component: DriverView,
+  },
+  {
+    path: "/financeiro",
+    name: "financeiro",
+    component: TarifasView,
   },
 ];
 

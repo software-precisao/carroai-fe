@@ -49,11 +49,12 @@
                                 role="button" aria-haspopup="false" data-bs-auto-close="outside" aria-expanded="false">
                                 <img src="../assets/images/user/avatar-2.jpg" alt="user-image" class="user-avtar">
                             </a> -->
-                            <a class="nav-link" id="UserDropdown" href="#" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                <div class="bg-primary p-3 rounded">
+                            <a class="nav-link" style="display: flex; align-items: center;" id="UserDropdown" href="#"
+                                data-bs-toggle="dropdown" aria-expanded="false" @click="toggleDropdown">
+                                <div class="bg-primary rounded me-2" style="padding: 3px 6px;">
                                     <div class="avatar-null img-fluid rounded me-1 ms-1">
-                                        <span v-if="!isLoading" class="fw-bold">{{ iniciais }}</span>
+                                        <span v-if="!isLoading" class="" style="font-size: 22px; font-weight: 400;">{{
+                                            iniciais }}</span>
                                         <span v-else>
                                             <div class="spinner-border small-spinner" role="status">
                                                 <span class="visually-hidden">Loading...</span>
@@ -61,9 +62,13 @@
                                         </span>
                                     </div>
                                 </div>
-
+                                <span style="font-weight: 500;" class="me-2 text-dark">{{ nome }} {{
+                                    sobrenome
+                                    }}</span>
+                                <i class="fa fa-angle-down text-dark" style="margin-bottom: -5px;"></i>
                             </a>
-                            <div class="dropdown-menu dropdown-user-profile dropdown-menu-end pc-h-dropdown">
+                            <div class="dropdown-menu dropdown-user-profile dropdown-menu-end pc-h-dropdown"
+                                aria-labelledby="UserDropdown">
                                 <div class="dropdown-body">
                                     <div class="profile-notification-scroll position-relative"
                                         style="max-height: calc(100vh - 225px)">
@@ -136,8 +141,12 @@ export default {
     data() {
         return {
             iniciais: "",
+            nome: "",
+            sobrenome: "",
             token: localStorage.getItem("token"),
             isLoading: true,
+
+            isDropdownOpen: false,
         }
     },
     mounted() {
@@ -156,7 +165,8 @@ export default {
         if (this.token != null) {
             const decode = jwtDecode<CustomJwtPayload>(this.token)
 
-
+            this.nome = decode.first_name
+            this.sobrenome = decode.last_name
             this.iniciais = `${decode.first_name.charAt(0)}${decode.last_name.charAt(0)}`;
             this.isLoading = false
         }
@@ -166,6 +176,10 @@ export default {
         //     const body = document.body;
         //     body.classList.toggle('sidebar-icon-only');
         // },
+
+        toggleDropdown() {
+            this.isDropdownOpen = !this.isDropdownOpen;
+        },
     },
 }
 </script>

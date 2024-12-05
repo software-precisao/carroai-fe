@@ -8,49 +8,17 @@
         <div class="pc-content">
             <!-- [ Main Content ] start -->
             <div class="row">
-                <div class="col-md-6 col-xl-3">
-                    <div class="card bg-grd-primary order-card">
-                        <div class="card-body">
-                            <h6 class="text-white">Motoristas Ativos</h6>
-                            <h2 class="text-end text-white"><i
-                                    class="feather icon-shopping-cart float-start"></i><span>486</span>
-                            </h2>
-                            <p class="m-b-0">Completed Orders<span class="float-end">351</span></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-xl-3">
-                    <div class="card bg-grd-danger order-card">
-                        <div class="card-body">
-                            <h6 class="text-white">Motoristas Inativos</h6>
-                            <h2 class="text-end text-white"><span>1641</span>
-                            </h2>
-                            <p class="m-b-0">This Month<span class="float-end">213</span></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-xl-3">
-                    <div class="card bg-grd-primary order-card">
-                        <div class="card-body">
-                            <h6 class="text-white">Passageiros Ativos</h6>
-                            <h2 class="text-end text-white"><i
-                                    class="feather icon-repeat float-start"></i><span>42</span></h2>
-                            <p class="m-b-0">This Month<span class="float-end">5</span></p>
-                        </div>
-                    </div>
-                </div>
+                <CardDashboardComp />
 
-                <div class="col-md-6 col-xl-3">
-                    <div class="card bg-grd-danger order-card">
-                        <div class="card-body">
-                            <h6 class="text-white">Passageiros Inativos</h6>
-                            <h2 class="text-end text-white"><i class="feather icon-award float-start"></i><span>9</span>
-                            </h2>
-                            <p class="m-b-0">This Month<span class="float-end">542</span></p>
-                        </div>
+
+                <div class="row col-12 mt-5">
+                    <div class="col-4">
+                        <CardTarifasComp />
+                    </div>
+                    <div class="col-8">
+                        <MapMotoristasComp />
                     </div>
                 </div>
-
                 <!-- descomentar quando for usar -->
                 <!-- <div class="col-md-6 col-xl-7">
                     <div class="card">
@@ -278,20 +246,26 @@
         </div>
     </main>
 
-    <FooterComponent />
+    <FooterComponent :isSidebarCollapsed="isSidebarCollapsed" />
 </template>
 
 <script lang="ts">
 import HeaderComponent from "../../components/header/HeaderComp.vue";
 import NavBarComponent from "../../components/navbar/navbarComp.vue";
 import FooterComponent from "../../components/footer/FooterComp.vue";
+import CardDashboardComp from "../../components/cards/cardDashboardComp.vue";
+import CardTarifasComp from "@/components/cards/cardTarifasComp.vue";
+import MapMotoristasComp from "@/components/maps/mapMotoristasComp.vue";
 
 export default {
     name: "MainView",
     components: {
         HeaderComponent,
         FooterComponent,
-        NavBarComponent
+        NavBarComponent,
+        CardDashboardComp,
+        CardTarifasComp,
+        MapMotoristasComp
     },
     data() {
         return {

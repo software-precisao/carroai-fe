@@ -21,6 +21,10 @@
                         <a href="/motoristas" class="pc-link"><span class="pc-micon">
                                 <i class="ph ph-gauge"></i></span><span class="pc-mtext">Motoristas</span></a>
                     </li>
+                    <li class="pc-item">
+                        <a href="/financeiro" class="pc-link"><span class="pc-micon">
+                                <i class="ph ph-currency-dollar"></i></span><span class="pc-mtext">Financeiro</span></a>
+                    </li>
 
 
                     <!-- <li class="pc-item pc-caption">

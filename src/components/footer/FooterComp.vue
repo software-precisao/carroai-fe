@@ -1,5 +1,5 @@
 <template>
-    <footer class="pc-footer">
+    <footer class="pc-footer pb-0" :class="{ 'with-sidebar': !isSidebarCollapsed }">
         <div class="footer-wrapper container-fluid">
             <div class="row text-muted">
                 <div class="col-6 text-start">
@@ -37,5 +37,11 @@
 
 export default {
     name: "FooterComponent",
+    props: {
+        isSidebarCollapsed: {
+            type: Boolean,
+            required: true
+        }
+    }
 }
 </script>
