@@ -7,6 +7,11 @@ interface LoginData {
   password: string;
 }
 
+interface LogoutData {
+  user_id: string;
+  provider: string;
+}
+
 interface VerificarEmailData {
   email: string;
 }
@@ -40,6 +45,23 @@ export default {
   login: async (data: LoginData): Promise<AxiosResponse | string> => {
     try {
       const response = await http.post(`/auth/login`, data, {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "Access-Control-Allow-Headers": "*",
+          "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
+        },
+      });
+      return response;
+    } catch (error: any) {
+      console.error("Login error:", error);
+      return error.response?.data || error.message || "Erro desconhecido";
+    }
+  },
+
+  logout: async (data: LogoutData): Promise<AxiosResponse | string> => {
+    try {
+      const response = await http.post(`/auth/logout`, data, {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",

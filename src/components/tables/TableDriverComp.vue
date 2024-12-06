@@ -8,7 +8,7 @@
     <td v-if="item.activated == true"><span class="badge text-bg-danger p-2">Inativo</span></td>
 
     <td class="row m-0 p-0" style="justify-content: center;">
-      <div class="col-2">
+      <div class="col-3">
         <button v-if="item.activated == false" @click="handleEditStatusAtivate(item.id)" type="button"
           class="btn btn-success px-2 py-1 mt-2 mb-2">
           <i class="fa fa-check"></i>
@@ -18,16 +18,16 @@
           <i class="fa fa-ban" style="color: #fff"></i>
         </button>
       </div>
-      <div class="col-2">
+      <div class="col-3">
         <button type="button" @click="openModal(item.id)" class="btn btn-info px-2 py-1 mt-2 mb-2">
           <i class="fa-regular fa-eye" style="color: #fff"></i>
         </button>
       </div>
-      <div class="col-2">
+      <!-- <div class="col-2">
         <button type="button" class="btn btn-danger px-3 py-1 mt-2 mb-2">
           <i class="fa-solid fa-exclamation"></i>
         </button>
-      </div>
+      </div> -->
     </td>
 
     <!-- <EditModal :item="item" @save="handleEditUsuario" /> -->

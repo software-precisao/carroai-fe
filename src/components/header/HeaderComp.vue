@@ -74,47 +74,45 @@
                                         style="max-height: calc(100vh - 225px)">
                                         <ul class="list-group list-group-flush w-100">
                                             <li class="list-group-item">
-                                                <a href="https://codedthemes.com/item/gradient-able-admin-template/"
-                                                    class="dropdown-item">
-                                                    <span class="d-flex align-items-center">
-                                                        <i class="ph ph-arrow-circle-down"></i>
-                                                        <span>Download</span>
-                                                    </span>
-                                                </a>
-                                            </li>
-                                            <li class="list-group-item">
-                                                <a href="#" class="dropdown-item">
+                                                <a href="/perfil" class="dropdown-item">
                                                     <span class="d-flex align-items-center">
                                                         <i class="ph ph-user-circle"></i>
-                                                        <span>Edit profile</span>
+                                                        <span>Perfil</span>
                                                     </span>
                                                 </a>
                                                 <a href="#" class="dropdown-item">
                                                     <span class="d-flex align-items-center">
                                                         <i class="ph ph-bell"></i>
-                                                        <span>Notifications</span>
+                                                        <span>Notificações ({{ notification }})</span>
                                                     </span>
                                                 </a>
-                                                <a href="#" class="dropdown-item">
+                                                <!-- <a href="#" class="dropdown-item">
                                                     <span class="d-flex align-items-center">
                                                         <i class="ph ph-gear-six"></i>
                                                         <span>Settings</span>
                                                     </span>
-                                                </a>
+                                                </a> -->
                                             </li>
                                             <li class="list-group-item">
-                                                <a href="#" class="dropdown-item">
+                                                <!-- <a href="#" class="dropdown-item">
                                                     <span class="d-flex align-items-center">
                                                         <i class="ph ph-plus-circle"></i>
                                                         <span>Add account</span>
                                                     </span>
-                                                </a>
-                                                <a href="#" class="dropdown-item">
+                                                </a> -->
+                                                <button class="dropdown-item" @click="handleLogout">
                                                     <span class="d-flex align-items-center">
                                                         <i class="ph ph-power"></i>
-                                                        <span>Logout</span>
+
+                                                        <span v-if="!loadingLogout">
+                                                            Logout
+                                                        </span>
+
+                                                        <span v-if="loadingLogout"
+                                                            class="spinner-border spinner-border-sm"
+                                                            aria-hidden="true"></span>
                                                     </span>
-                                                </a>
+                                                </button>
                                             </li>
                                         </ul>
                                     </div>
@@ -132,6 +130,7 @@
 
 import { jwtDecode } from "jwt-decode";
 import NavBarComponent from "../../components/navbar/navbarComp.vue";
+import api from "../../services/api/auth/index"
 
 export default {
     name: "HeaderComponent",
@@ -142,11 +141,16 @@ export default {
         return {
             iniciais: "",
             nome: "",
+            id: "",
             sobrenome: "",
             token: localStorage.getItem("token"),
             isLoading: true,
 
             isDropdownOpen: false,
+
+            notification: 0,
+
+            loadingLogout: false,
         }
     },
     mounted() {
@@ -167,6 +171,7 @@ export default {
 
             this.nome = decode.first_name
             this.sobrenome = decode.last_name
+            this.id = decode.id
             this.iniciais = `${decode.first_name.charAt(0)}${decode.last_name.charAt(0)}`;
             this.isLoading = false
         }
@@ -179,6 +184,33 @@ export default {
 
         toggleDropdown() {
             this.isDropdownOpen = !this.isDropdownOpen;
+        },
+
+        handleLogout() {
+            event?.preventDefault()
+
+            this.loadingLogout = true
+
+            let id = this.id
+
+            const data = {
+                user_id: id,
+                provider: "local"
+            }
+
+            api.logout(data).then((res) => {
+                console.log(res)
+                if (typeof res != "string" && res.status === 200) {
+                    this.loadingLogout = false
+                    localStorage.removeItem("token")
+
+                    setTimeout(() => {
+                        window.location.href = "/"
+                    }, 3000);
+                } else {
+                    this.loadingLogout = false
+                }
+            })
         },
     },
 }

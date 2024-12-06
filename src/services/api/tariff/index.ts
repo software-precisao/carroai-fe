@@ -2,14 +2,17 @@ import { AxiosResponse } from "axios";
 import { http } from "../../config";
 
 // Interfaces para os dados esperados
-interface UpdateActiveatdUser {
-  activated: boolean;
+interface CadastrarTarifa {
+  day_type: string;
+  base_fare: string | number;
+  kilometer_rate: string | number;
+  time_rate: string | number;
 }
 
 export default {
-  getAllDrivers: async (): Promise<AxiosResponse | string> => {
+  getAllTarifas: async (): Promise<AxiosResponse | string> => {
     try {
-      const response = await http.get(`/users/drivers`, {
+      const response = await http.get(`/tariff/`, {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
@@ -24,12 +27,11 @@ export default {
     }
   },
 
-  updateActiveatdUser: async (
-    id: string,
-    data: UpdateActiveatdUser
+  cadastrarTarifa: async (
+    data: CadastrarTarifa
   ): Promise<AxiosResponse | string> => {
     try {
-      const response = await http.put(`/users/edit/${id}`, data, {
+      const response = await http.post(`/tariff/new-tariffs`, data, {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
@@ -44,14 +46,17 @@ export default {
     }
   },
 
-  getDriverChecklist: async (id: string): Promise<AxiosResponse | string> => {
+  atualizarTarifa: async (
+    id: string,
+    data: CadastrarTarifa
+  ): Promise<AxiosResponse | string> => {
     try {
-      const response = await http.get(`/checklist/${id}`, {
+      const response = await http.put(`/tariff/edit-tariffs/${id}`, data, {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
           "Access-Control-Allow-Headers": "*",
-          "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
+          "Access-Control-Allow-Methods": "OPTIONS,POST,GET,PUT",
         },
       });
       return response;
