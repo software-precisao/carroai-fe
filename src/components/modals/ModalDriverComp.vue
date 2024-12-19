@@ -12,14 +12,21 @@
             checklist != null ? checklist.message :
               "⚠️ Checklist incompleto. Alguns campos ainda precisam serpreenchidos." }}</h6>
           <div class="row mt-4 px-4">
-            <div v-for="(item, index) in checklistItems" :key="index"
+            <div v-for="(checks, index) in checklistItems" :key="index"
               class="form-check col-6 d-flex align-items-center">
-              <input class="form-check-input me-3" type="checkbox" :id="'checklist-item-' + index" v-model="item.value"
-                disabled :class="{ 'is-false': !item.value }" />
+              <input class="form-check-input me-3" type="checkbox" :id="'checklist-item-' + index"
+                v-model="checks.value" disabled :class="{ 'is-false': !checks.value }" />
               <!-- <a href="#" style="color: #000"> -->
-              <label class="form-check-label " :for="'checklist-item-' + index">
-                {{ item.label }}
+              <label class="form-check-label " :for="'checklist-item-' + index"
+                v-if="!checks.value || checks.label == 'Termos e condições'">
+                {{ checks.label }}
               </label>
+
+              <button type="button" class="form-check-label"
+                style="background-color: transparent; border: none; cursor: pointer;" :for="'checklist-item-' + index"
+                v-if="checks.value && checks.label != 'Termos e condições'" @click="handleBaixar(checks)">
+                {{ checks.label }}
+              </button>
               <!-- </a> -->
             </div>
           </div>
@@ -68,6 +75,7 @@ export default {
         { label: "Avatar", value: false },
         { label: "Detalhes do veículo", value: false },
         { label: "Lincença do motorista", value: false },
+        { label: "CNH do motorista", value: false },
         { label: "Prova de residência", value: false },
       ] as ChecklistItem[]
     }
@@ -87,11 +95,67 @@ export default {
             { label: "Avatar", value: res.data.data.send_avatar },
             { label: "Detalhes do veículo", value: res.data.data.send_detail_vehicle },
             { label: "Lincença do motorista", value: res.data.data.send_license_driver },
+            { label: "CNH do motorista", value: res.data.data.send_crlv_vehicle },
             { label: "Prova de residência", value: res.data.data.send_proof_residence },
           ]
         }
       })
     },
+
+    async handleBaixar(checks) {
+      try {
+        let item = this.item;
+        console.log(checks, item);
+
+        let urlFecth
+        let fileName = ""
+
+        if (checks.label == "Avatar") {
+          urlFecth = `http://localhost:3000/public/images/avatars/${item.avatar}`
+          fileName = 'avatar'
+        } else if (checks.label == "Detalhes do veículo") {
+          urlFecth = `http://localhost:3000/public/images/vehicles/${item.vehicle.photo_plate}`
+          fileName = 'photo_plate'
+        } else if (checks.label == "Lincença do motorista") {
+          urlFecth = `http://localhost:3000/public/images/drivers/${item.userDriver.license_photo}`
+          fileName = 'license_photo'
+        } else if (checks.label == "CNH do motorista") {
+          urlFecth = `http://localhost:3000/public/images/vehicles/crlv/${item.vehicle.crlv}`
+          fileName = 'crlv'
+        } else if (checks.label == "Prova de residência") {
+          urlFecth = `http://localhost:3000/public/images/residences/${item.userDriver.proof_residence}`
+          fileName = 'proof_residence'
+        }
+
+        // Fetch da imagem como blob
+        const response = await fetch(urlFecth);
+        if (!response.ok) {
+          throw new Error("Falha ao buscar a imagem.");
+        }
+        const blob = await response.blob();
+
+        // Extrair o nome do arquivo do URL
+        // const urlParts = item.avatar.split("/");
+        // const fileName = urlParts[urlParts.length - 1]; // Última parte do caminho
+
+        // Criar um link para forçar o download
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = fileName; // Usar o nome extraído do URL
+
+        // Simular um clique no link
+        document.body.appendChild(link);
+        link.click();
+
+        // Limpar recursos
+        link.remove();
+        window.URL.revokeObjectURL(url);
+      } catch (error) {
+        console.error("Erro ao baixar a imagem:", error);
+        alert("Erro ao baixar a imagem. Verifique o console para mais detalhes.");
+      }
+    }
   },
 };
 </script>

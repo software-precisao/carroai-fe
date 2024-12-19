@@ -39,7 +39,6 @@ export default {
       });
       return response;
     } catch (error: any) {
-      console.error("Login error:", error);
       return error.response?.data || error.message || "Erro desconhecido";
     }
   },
@@ -56,7 +55,6 @@ export default {
       });
       return response;
     } catch (error: any) {
-      console.error("Login error:", error);
       return error.response?.data || error.message || "Erro desconhecido";
     }
   },

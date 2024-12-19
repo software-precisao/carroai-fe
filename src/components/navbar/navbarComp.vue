@@ -131,7 +131,17 @@ export default {
             type: Boolean,
             required: true,
         },
-    }
+    },
+    data() {
+        return {
+            token: localStorage.getItem("token")
+        }
+    },
+    mounted() {
+        if (!this.token) {
+            window.location.href = "/"
+        }
+    },
 }
 </script>
 

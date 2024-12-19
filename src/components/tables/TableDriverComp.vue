@@ -1,9 +1,9 @@
 <template>
   <tr>
-    <td>{{ item.first_name }} {{ item.last_name }}</td>
-    <td>{{ item.email }}</td>
-    <td>+{{ item.phone_number }}</td>
-    <td>{{ item.vehicle.license_plate }}</td>
+    <td>{{ item.first_name ? item.first_name : "--" }} {{ item.last_name ? item.last_name : "--" }}</td>
+    <td>{{ item.email ? item.email : "--" }}</td>
+    <td>{{ item.phone_number ? item.phone_number : "--" }}</td>
+    <td>{{ item.vehicle ? item.vehicle.license_plate : "--" }}</td>
     <td v-if="item.activated == false"><span class="badge text-bg-success p-2">Ativo</span></td>
     <td v-if="item.activated == true"><span class="badge text-bg-danger p-2">Inativo</span></td>
 
@@ -32,7 +32,6 @@
 
     <!-- <EditModal :item="item" @save="handleEditUsuario" /> -->
   </tr>
-
   <ModalDriverComp :id="item.id" :item="item" />
 </template>
 
