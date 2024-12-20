@@ -111,19 +111,24 @@ export default {
         let fileName = ""
 
         if (checks.label == "Avatar") {
-          urlFecth = `http://localhost:3000/public/images/avatars/${item.avatar}`
+          // urlFecth = `http://localhost:3000/public/images/avatars/${item.avatar}`
+          urlFecth = `https://api.carroai.app/public/images/avatars/${item.avatar}`
           fileName = 'avatar'
         } else if (checks.label == "Detalhes do veículo") {
-          urlFecth = `http://localhost:3000/public/images/vehicles/${item.vehicle.photo_plate}`
+          // urlFecth = `http://localhost:3000/public/images/vehicles/${item.vehicle.photo_plate}`
+          urlFecth = `https://api.carroai.app/public/images/vehicles/${item.vehicle.photo_plate}`
           fileName = 'photo_plate'
         } else if (checks.label == "Lincença do motorista") {
-          urlFecth = `http://localhost:3000/public/images/drivers/${item.userDriver.license_photo}`
+          // urlFecth = `http://localhost:3000/public/images/drivers/${item.userDriver.license_photo}`
+          urlFecth = `https://api.carroai.app/public/images/drivers/${item.userDriver.license_photo}`
           fileName = 'license_photo'
         } else if (checks.label == "CNH do motorista") {
-          urlFecth = `http://localhost:3000/public/images/vehicles/crlv/${item.vehicle.crlv}`
+          // urlFecth = `http://localhost:3000/public/images/vehicles/crlv/${item.vehicle.crlv}`
+          urlFecth = `https://api.carroai.app/public/images/vehicles/crlv/${item.vehicle.crlv}`
           fileName = 'crlv'
         } else if (checks.label == "Prova de residência") {
-          urlFecth = `http://localhost:3000/public/images/residences/${item.userDriver.proof_residence}`
+          // urlFecth = `http://localhost:3000/public/images/residences/${item.userDriver.proof_residence}`
+          urlFecth = `https://api.carroai.app/public/images/residences/${item.userDriver.proof_residence}`
           fileName = 'proof_residence'
         }
 

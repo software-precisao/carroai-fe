@@ -4,8 +4,8 @@
     <td>{{ item.email ? item.email : "--" }}</td>
     <td>{{ item.phone_number ? item.phone_number : "--" }}</td>
     <td>{{ item.vehicle ? item.vehicle.license_plate : "--" }}</td>
-    <td v-if="item.activated == false"><span class="badge text-bg-success p-2">Ativo</span></td>
-    <td v-if="item.activated == true"><span class="badge text-bg-danger p-2">Inativo</span></td>
+    <td v-if="item.activated == true"><span class="badge text-bg-success p-2">Ativo</span></td>
+    <td v-if="item.activated == false"><span class="badge text-bg-danger p-2">Inativo</span></td>
 
     <td class="row m-0 p-0" style="justify-content: center;">
       <div class="col-3">
