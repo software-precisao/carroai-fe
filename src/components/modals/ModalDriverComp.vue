@@ -102,65 +102,53 @@ export default {
       })
     },
 
-    async handleBaixar(checks) {
-      try {
+    
+
+    async handleBaixar(checks: ChecklistItem) {
+    try {
         let item = this.item;
         console.log(checks, item);
 
-        let urlFecth
-        let fileName = ""
+        let urlFecth;
+        let fileName = "";
 
-        if (checks.label == "Avatar") {
-          // urlFecth = `http://localhost:3000/public/images/avatars/${item.avatar}`
-          urlFecth = `https://api.carroai.app/public/images/avatars/${item.avatar}`
-          fileName = 'avatar'
-        } else if (checks.label == "Detalhes do veículo") {
-          // urlFecth = `http://localhost:3000/public/images/vehicles/${item.vehicle.photo_plate}`
-          urlFecth = `https://api.carroai.app/public/images/vehicles/${item.vehicle.photo_plate}`
-          fileName = 'photo_plate'
-        } else if (checks.label == "Lincença do motorista") {
-          // urlFecth = `http://localhost:3000/public/images/drivers/${item.userDriver.license_photo}`
-          urlFecth = `https://api.carroai.app/public/images/drivers/${item.userDriver.license_photo}`
-          fileName = 'license_photo'
-        } else if (checks.label == "CNH do motorista") {
-          // urlFecth = `http://localhost:3000/public/images/vehicles/crlv/${item.vehicle.crlv}`
-          urlFecth = `https://api.carroai.app/public/images/vehicles/crlv/${item.vehicle.crlv}`
-          fileName = 'crlv'
-        } else if (checks.label == "Prova de residência") {
-          // urlFecth = `http://localhost:3000/public/images/residences/${item.userDriver.proof_residence}`
-          urlFecth = `https://api.carroai.app/public/images/residences/${item.userDriver.proof_residence}`
-          fileName = 'proof_residence'
+        if (checks.label === "Avatar") {
+            urlFecth = `https://api.carroai.app/public/images/avatars/${item.avatar}`;
+            fileName = "avatar";
+        } else if (checks.label === "Detalhes do veículo") {
+            urlFecth = `https://api.carroai.app/public/images/vehicles/${item.vehicle.photo_plate}`;
+            fileName = "photo_plate";
+        } else if (checks.label === "Lincença do motorista") {
+            urlFecth = `https://api.carroai.app/public/images/drivers/${item.userDriver.license_photo}`;
+            fileName = "license_photo";
+        } else if (checks.label === "CNH do motorista") {
+            urlFecth = `https://api.carroai.app/public/images/vehicles/crlv/${item.vehicle.crlv}`;
+            fileName = "crlv";
+        } else if (checks.label === "Prova de residência") {
+            urlFecth = `https://api.carroai.app/public/images/residences/${item.userDriver.proof_residence}`;
+            fileName = "proof_residence";
         }
 
         // Fetch da imagem como blob
-        const response = await fetch(urlFecth);
-        if (!response.ok) {
-          throw new Error("Falha ao buscar a imagem.");
-        }
+        const response = await fetch(urlFecth ?? "https://api.carroai.app/public/images/");
+        if (!response.ok) throw new Error("Falha ao buscar a imagem.");
+
         const blob = await response.blob();
-
-        // Extrair o nome do arquivo do URL
-        // const urlParts = item.avatar.split("/");
-        // const fileName = urlParts[urlParts.length - 1]; // Última parte do caminho
-
-        // Criar um link para forçar o download
         const url = window.URL.createObjectURL(blob);
         const link = document.createElement("a");
         link.href = url;
-        link.download = fileName; // Usar o nome extraído do URL
+        link.download = fileName;
 
-        // Simular um clique no link
         document.body.appendChild(link);
         link.click();
 
-        // Limpar recursos
         link.remove();
         window.URL.revokeObjectURL(url);
-      } catch (error) {
+    } catch (error) {
         console.error("Erro ao baixar a imagem:", error);
         alert("Erro ao baixar a imagem. Verifique o console para mais detalhes.");
-      }
     }
+}
   },
 };
 </script>

@@ -176,7 +176,7 @@
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                                     Cancelar
                                 </button>
-                                <button type="button" :disabled="autenticando" @click="handledEdit()"
+                                <button type="button" :disabled="autenticando" 
                                     class="btn btn-success">
                                     {{ textoBotao }}
                                     <span v-if="autenticando" class="spinner-border spinner-border-sm"
@@ -241,7 +241,7 @@
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                                     Cancelar
                                 </button>
-                                <button type="button" :disabled="autenticando" @click="handledEdit()"
+                                <button type="button" :disabled="autenticando"
                                     class="btn btn-success">
                                     {{ textoBotaoEdit }}
                                     <span v-if="autenticando" class="spinner-border spinner-border-sm"
@@ -287,9 +287,9 @@ export default {
             qrcode: "",
             idUser: "",
             card: true,
-
+            mostrarSkeleton: false,
             isSidebarCollapsed: false,
-
+            isEmailInvalid: false,
             token: localStorage.getItem("token")
         };
     },

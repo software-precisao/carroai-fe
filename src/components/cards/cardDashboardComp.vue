@@ -46,7 +46,7 @@
 </template>
 
 <script lang="ts">
-import dayjs from "dayjs";
+import * as dayjs from "dayjs";
 import api from "../../services/api/driver/index"
 import apiPassgenger from "../../services/api/passenger/index"
 
