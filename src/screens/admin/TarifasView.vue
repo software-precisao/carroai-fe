@@ -330,6 +330,7 @@ export default {
                         this.msgSuccess = true
 
                         setTimeout(() => {
+                            this.autenticando = false
                             this.dayType = ""
                             this.baseFlare = "0"
                             this.kilometerRate = "0"
