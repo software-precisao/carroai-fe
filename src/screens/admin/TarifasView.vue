@@ -125,6 +125,15 @@
                             alertTitle="Erro!"
                             alertMessage="Houve um erro ao tentar salvar as novas tarifas tente novamente mais tarde!" />
 
+                        <AlertComponent v-if="msgTarifasCadastradas" :showAlert="true" alertType="danger" alertIcon=""
+                            alertTitle="Ops..." alertMessage="Você já cadastrou as tarifas de fim e dia de semana!" />
+
+                        <AlertComponent v-if="msgTarifaDiaCad" :showAlert="true" alertType="danger" alertIcon=""
+                            alertTitle="Ops..." alertMessage="Você já cadastrou a tarifa de dia de semana!" />
+
+                        <AlertComponent v-if="msgTarifaFimCad" :showAlert="true" alertType="danger" alertIcon=""
+                            alertTitle="Ops..." alertMessage="Você já cadastrou a tarifa de fim de semana!" />
+
                         <AlertComponent v-if="msgSuccess" :showAlert="true" alertType="success" alertIcon=""
                             alertTitle="Sucesso!" alertMessage="Tarifas cadastradas com sucesso!" />
 
@@ -258,7 +267,10 @@ export default {
 
             errorEdit: false,
             successEdit: false,
-            autenticandoEdit: false
+            autenticandoEdit: false,
+            msgTarifasCadastradas: false,
+            msgTarifaFimCad: false,
+            msgTarifaDiaCad: false,
         };
     },
     computed: {
@@ -306,12 +318,42 @@ export default {
         handleCadastrarTarifa() {
             this.autenticando = true
 
+            const tarifas = this.allTarifas
+
             const dayType = this.dayType
             const baseFlare = this.baseFlare.replace(',', '.')
             const kilometerRate = this.kilometerRate.replace(',', '.')
             const timeRate = this.timeRate.replace(',', '.')
 
-            if (
+            console.log(dayType)
+
+            const tarifaDiaDeSemana = tarifas.some((tariff) => tariff.day_type === "WEEKDAY");
+            const tarifaFimDeSemana = tarifas.some((tariff) => tariff.day_type === "WEEKEND");
+
+
+            if (tarifaDiaDeSemana && tarifaFimDeSemana) {
+                this.msgTarifasCadastradas = true
+                this.autenticando = false
+
+                setTimeout(() => {
+                    this.msgTarifasCadastradas = false
+                }, 3000);
+            } else if (tarifaDiaDeSemana && dayType == "WEEKDAY") {
+                this.msgTarifaDiaCad = true
+                this.autenticando = false
+
+                setTimeout(() => {
+                    this.msgTarifaDiaCad = false
+                }, 3000);
+
+            } else if (tarifaFimDeSemana && dayType == "WEEKEND") {
+                this.msgTarifaFimCad = true
+                this.autenticando = false
+
+                setTimeout(() => {
+                    this.msgTarifaFimCad = false
+                }, 3000);
+            } else if (
                 dayType != "" &&
                 (baseFlare != "0,00" && baseFlare != "0") &&
                 (kilometerRate != "0,00" && kilometerRate != "0") &&
@@ -328,6 +370,7 @@ export default {
                 api.cadastrarTarifa(data).then((res) => {
                     if (typeof res !== "string" && res.status === 201) {
                         this.msgSuccess = true
+                        this.getTarifas()
 
                         setTimeout(() => {
                             this.autenticando = false
